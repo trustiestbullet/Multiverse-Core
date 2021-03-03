@@ -64,8 +64,7 @@ public class MVPlayerListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void playerRespawn(PlayerRespawnEvent event) {
-        World world = event.getPlayer().getWorld();
-        MultiverseWorld mvWorld = this.worldManager.getMVWorld(world.getName());
+        MultiverseWorld mvWorld = this.worldManager.getMVWorld(event.getPlayer().getWorld().getName());
         // If it's not a World MV manages we stop.
         if (mvWorld == null) {
             return;
@@ -84,19 +83,14 @@ public class MVPlayerListener implements Listener {
             return;
         }
 
-        // Get the instance of the World the player should respawn at.
-        MultiverseWorld respawnWorld = null;
-        if (this.worldManager.isMVWorld(mvWorld.getRespawnToWorld())) {
-            respawnWorld = this.worldManager.getMVWorld(mvWorld.getRespawnToWorld());
+        World respawnWorld = mvWorld.getRespawnToWorld();
+        if (respawnWorld.equals(event.getRespawnLocation().getWorld())) {
+            Logging.fine("Player already respawning at RespawnWorld '%s'. No action needed.", respawnWorld.getName());
+            return;
         }
 
-        // If it's null then it either means the World doesn't exist or the value is blank, so we don't handle it.
-        // NOW: We'll always handle it to get more accurate spawns
-        if (respawnWorld != null) {
-            world = respawnWorld.getCBWorld();
-        }
-        // World has been set to the appropriate world
-        Location respawnLocation = getMostAccurateRespawnLocation(world);
+        // World to be set to the appropriate respawn world defined.
+        Location respawnLocation = getMostAccurateRespawnLocation(respawnWorld);
 
         MVRespawnEvent respawnEvent = new MVRespawnEvent(respawnLocation, event.getPlayer(), "compatability");
         this.plugin.getServer().getPluginManager().callEvent(respawnEvent);

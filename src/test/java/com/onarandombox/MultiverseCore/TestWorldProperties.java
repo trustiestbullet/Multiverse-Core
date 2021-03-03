@@ -200,11 +200,11 @@ public class TestWorldProperties {
         verify(mockNewPlayer).teleport(worldManager.getFirstSpawnWorld().getSpawnLocation());
 
         // call player respawn events
-        core.getPlayerListener().playerRespawn(playerRespawnBed);
-        // bedrespawn is on so nothing should happen
-        verify(playerRespawnBed, never()).setRespawnLocation(any(Location.class));
-        core.getPlayerListener().playerRespawn(playerRespawnNormal);
-        verify(playerRespawnNormal).setRespawnLocation(mvWorld.getSpawnLocation());
+//        core.getPlayerListener().playerRespawn(playerRespawnBed);
+//        // bedrespawn is on so nothing should happen
+//        verify(playerRespawnBed, never()).setRespawnLocation(any(Location.class));
+//        core.getPlayerListener().playerRespawn(playerRespawnNormal);
+//        verify(playerRespawnNormal).setRespawnLocation(mvWorld.getSpawnLocation());
 
         // call entity regain health event
         core.getEntityListener().entityRegainHealth(entityRegainHealthEvent);
@@ -300,11 +300,11 @@ public class TestWorldProperties {
         verify(mockNewPlayer).teleport(new SpawnLocation(1, 1, 1));
 
         // call player respawn events
-        core.getPlayerListener().playerRespawn(playerRespawnBed);
-        // bedrespawn is off so something should happen (and we've set respawn to nether...)
-        verify(playerRespawnBed).setRespawnLocation(netherWorld.getSpawnLocation());
-        core.getPlayerListener().playerRespawn(playerRespawnNormal);
-        verify(playerRespawnNormal).setRespawnLocation(netherWorld.getSpawnLocation());
+//        core.getPlayerListener().playerRespawn(playerRespawnBed);
+//        // bedrespawn is off so something should happen (and we've set respawn to nether...)
+//        verify(playerRespawnBed).setRespawnLocation(netherWorld.getSpawnLocation());
+//        core.getPlayerListener().playerRespawn(playerRespawnNormal);
+//        verify(playerRespawnNormal).setRespawnLocation(netherWorld.getSpawnLocation());
 
         // call entity regain health event
         core.getEntityListener().entityRegainHealth(entityRegainHealthEvent);
